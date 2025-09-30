@@ -13,7 +13,7 @@ const Guide: React.FC<Props> = (props) => {
     <Layout>
       <Row>
         <Typography.Title level={3} className={styles.title}>
-          欢迎使用 <strong>{name}</strong> ！
+          欢迎使用 <strong>{name}</strong> ！ 我追加的内容6699
         </Typography.Title>
       </Row>
     </Layout>
