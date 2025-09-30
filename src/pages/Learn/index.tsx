@@ -44,6 +44,24 @@ const LearnPage: React.FC = () => {
     });
   }
 
+  // 演示useState----数组演示
+  const [arr, setArr] = useState([
+    { id: 1, name: 'Tom' },
+    { id: 2, name: 'King' },
+    { id: 3, name: 'Jerry' },
+  ]);
+  function testUseStateUpdateArr() {
+    // 数组是有序的，这样前后写不会覆盖只是修改数组位置
+    // 里面也可以直接写一个有返回值的函数，反正是直接覆盖掉原始的
+    setArr([
+      { id: 666, name: '前面添加' },
+      ...arr,
+      { id: 4, name: '后面添加' },
+    ]);
+  }
+  // 创建tsx，渲染页面
+  const arrContent = arr.map((item) => <li key={item.id}>{item.name}</li>);
+
   return (
     <PageContainer ghost>
       {/* 演示插值语法 */}
@@ -67,6 +85,12 @@ const LearnPage: React.FC = () => {
       <i>
         {User.userName}----{User.userAge}
       </i>
+
+      {/* 演示响应式数据useState----数组演示 */}
+      <button onClick={testUseStateUpdateArr} type="button">
+        点击修改数组
+      </button>
+      <ul>{arrContent}</ul>
 
       <div>React.FC 表示LearnPage变量为 React 函数组件</div>
       <div>
