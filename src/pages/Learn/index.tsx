@@ -1,6 +1,6 @@
 import { PageContainer } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
-import { Fragment, useState } from 'react';
+import { Fragment, useRef, useState } from 'react';
 import ChildrenModule from './ChildrenModule';
 import MySlot from './MySlot';
 import SonSendData from './SonSendData';
@@ -88,6 +88,12 @@ const LearnPage: React.FC = () => {
     console.log('子组件的数据', data);
   }
 
+  // 演示useRef
+  const inputRef = useRef<HTMLInputElement>(null);
+  function DomOperation() {
+    inputRef.current?.focus();
+  }
+
   return (
     <PageContainer ghost>
       {/* 演示插值语法 */}
@@ -144,6 +150,12 @@ const LearnPage: React.FC = () => {
 
       {/* 子组件 给 父组件传值 */}
       <SonSendData onSonData={getSonData} />
+
+      {/* 演示useRef */}
+      <button onClick={DomOperation} type="button">
+        点击使输入框获得焦点
+      </button>
+      <input type="text" ref={inputRef} />
 
       <div>React.FC 表示LearnPage变量为 React 函数组件</div>
       <div>
