@@ -1,6 +1,9 @@
 import { PageContainer } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
 import { Fragment, useState } from 'react';
+import ChildrenModule from './ChildrenModule';
+import MySlot from './MySlot';
+import SonSendData from './SonSendData';
 const LearnPage: React.FC = () => {
   // 全局状态值
   const { name } = useModel('global');
@@ -62,6 +65,29 @@ const LearnPage: React.FC = () => {
   // 创建tsx，渲染页面
   const arrContent = arr.map((item) => <li key={item.id}>{item.name}</li>);
 
+  // 编辑标签的属性
+  const setProps = {
+    className: 'Myimg',
+    style: {
+      width: '50px',
+      height: '50px',
+    },
+  };
+
+  // 父组件给子组件传递值
+  const deliveryData = {
+    id: 116,
+    articles: {
+      title: '牛逼标题66991',
+      content: '文章内容',
+    },
+  };
+
+  // 子组件给父组件传递值
+  function getSonData(data: any) {
+    console.log('子组件的数据', data);
+  }
+
   return (
     <PageContainer ghost>
       {/* 演示插值语法 */}
@@ -91,6 +117,33 @@ const LearnPage: React.FC = () => {
         点击修改数组
       </button>
       <ul>{arrContent}</ul>
+
+      {/* 演示tsx的标签属性props */}
+      <img
+        src="https://img.alicdn.com/tfs/TB1YHEpwUT1gK0jSZFhXXaAtVXa-28-27.svg"
+        alt="提示词语"
+        {...setProps}
+      />
+
+      {/* 父组件给子组件传递值 */}
+      <ChildrenModule {...deliveryData} />
+
+      {/* 父组件给子组件传递tsx，插槽 */}
+      <MySlot
+        Mytitle="插槽标题6699"
+        footer={
+          <div>
+            <div>底部内容footer</div>
+            <small>插槽内容small标签</small>
+          </div>
+        }
+      >
+        <div>插槽内容div</div>
+        <i>插槽内容i标签斜体字</i>
+      </MySlot>
+
+      {/* 子组件 给 父组件传值 */}
+      <SonSendData onSonData={getSonData} />
 
       <div>React.FC 表示LearnPage变量为 React 函数组件</div>
       <div>
