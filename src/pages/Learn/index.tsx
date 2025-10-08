@@ -1,6 +1,6 @@
 import { PageContainer } from '@ant-design/pro-components';
 import { useModel } from '@umijs/max';
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import ChildrenModule from './ChildrenModule';
 import MySlot from './MySlot';
 import SonSendData from './SonSendData';
@@ -94,6 +94,23 @@ const LearnPage: React.FC = () => {
     inputRef.current?.focus();
   }
 
+  // 测试useEffect
+  const [stateData, setStateData] = useState(1);
+  // setStateData(3); // 修改状态值，React会再次执行整个函数组件。这里需要注意的是，这样直接写在这里页面会出现问题（浏览器打印的错误信息）：出了点问题。 过度的重新渲染。React 对渲染次数进行了限制，以避免出现无限循环的情况。
+
+  function updateDate() {
+    setStateData(stateData + 1);
+  }
+  useEffect(() => {
+    console.log('useEffect里面的逻辑--里面');
+  }, []);
+  useEffect(() => {
+    console.log('监听stateData值的变化--里面');
+  }, [stateData]);
+
+  // 每次的页面渲染，这里都会重新执行
+  console.log('测试useEffect开始！--外面');
+
   return (
     <PageContainer ghost>
       {/* 演示插值语法 */}
@@ -156,6 +173,12 @@ const LearnPage: React.FC = () => {
         点击使输入框获得焦点
       </button>
       <input type="text" ref={inputRef} />
+
+      {/* 测试useEffect */}
+      <h1 style={{ color: 'red' }}>---------------------------------------</h1>
+      <button onClick={updateDate} type="button">
+        点击修改状态，触发页面重新渲染
+      </button>
 
       <div>React.FC 表示LearnPage变量为 React 函数组件</div>
       <div>
